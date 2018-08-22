@@ -1,0 +1,35 @@
+---
+- name: Zabbix agent package transfer
+  win_copy:
+    src: '{{ win_software }}'
+    dest: '{{ win_temp_path }}\{{ win_software }}'
+  ignore_errors: yes
+
+- name: Zabbix agent installation
+  win_package:
+    path: '{{ win_temp_path }}\{{ win_software }}'
+    arguments: 'HOSTNAME={{ zabbix_agent_hostname }} HOSTNAMEFQDN=0 SERVER={{ zabbix_agent_server }} LPORT={{ zabbix_agent_listenport }} SERVERACTIVE={{ zabbix_agent_serveractive }} RMTCMD=0 /qn'
+  ignore_errors: yes
+
+- name: Zabbix Agent package removed
+  win_file:
+    path: '{{ win_temp_path }}\{{ win_software }}'
+    state: absent
+  ignore_errors: yes
+
+- name: Ensure zabbix agent service is enabled and started
+  win_service:
+    name: 'Zabbix Agent'
+    state: started
+    start_mode: auto
+  ignore_errors: yes
+
+- name: Firewall rule to allow zabbix agent
+  win_firewall_rule:
+    enable: yes
+    state: present
+    action: allow
+    direction: In
+    name: 'Zabbix Agent'
+    protocol: 'TCP'
+    localport: '{{ zabbix_agent_listenport }}'
