@@ -32,7 +32,7 @@ Reference tests/test.yml
 License
 -------
 
-WTFPL 2.0
+MIT
 
 Author Information
 ------------------
