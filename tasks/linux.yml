@@ -77,7 +77,7 @@
 
 - name: "Configure zabbix-agent"
   template:
-    src: zabbix_agentd.conf.j2
+    src: zabbix_agentd.linux.conf.j2
     dest: /etc/zabbix/{{ zabbix_agent_conf }}
     owner: root
     group: root

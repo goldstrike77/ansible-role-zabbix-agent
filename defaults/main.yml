@@ -95,5 +95,4 @@ zabbix_agent_tlspskidentity:
 zabbix_agent_tlspskfile: ''
 
 # Windows
-win_temp_path: 'd:'
-win_software: 'zabbix_agent-3.4.10_x64.msi'
+win_software: 'zabbix-agent'
