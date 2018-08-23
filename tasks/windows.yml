@@ -2,8 +2,7 @@
 - name: 'Zabbix {{ family }} agent installation'
   win_chocolatey:
     name: '{{ win_software }}'
-    state: 'present'
-    version: '{{ zabbix_version }}' 
+    state: 'latest'
   ignore_errors: yes
 
 - name: 'Zabbix {{ family }} agent configure file transfer'
