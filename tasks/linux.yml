@@ -46,6 +46,26 @@
     - config
     - service
 
+- name: "Userparameter script transfer"
+  copy:
+    src: '{{ item }}'
+    dest: '{{ zabbix_agent_include }}'
+    owner: root
+    group: root
+    mode: 0777
+  with_items:
+    - '{{ zabbix_user_scripts }}'
+
+- name: "Userparameter configure transfer"
+  template:
+    src: '{{ item }}.j2'
+    dest: '{{ zabbix_agent_include }}/{{ item }}'
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - '{{ zabbix_user_conf }}'
+
 # straight to getenforce binary , workaround for missing python_selinux library
 - name: "Get getenforce binary"
   stat:
