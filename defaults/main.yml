@@ -96,9 +96,9 @@ zabbix_agent_tlspskfile: ''
 
 # Userparameter script
 zabbix_user_scripts:
-  - 'lld-disks.py'
+  - 'lld-disks.py' # https://github.com/grundic/zabbix-disk-performance
 zabbix_user_conf:
-  - 'userparameter_diskstats.conf'
+  - 'userparameter_diskstats.conf' # https://github.com/grundic/zabbix-disk-performance
 
 # Windows
 win_software: 'zabbix-agent'
