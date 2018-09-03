@@ -49,7 +49,7 @@
 - name: "Userparameter script transfer"
   copy:
     src: '{{ item }}'
-    dest: '{{ zabbix_agent_include }}'
+    dest: '/usr/local/bin'
     owner: root
     group: root
     mode: 0777
