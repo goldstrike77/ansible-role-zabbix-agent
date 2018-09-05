@@ -16,7 +16,6 @@
   win_service:
     name: 'Zabbix Agent'
     state: 'restarted'
-    start_mode: auto
   when: config_upgrade|changed
   ignore_errors: yes
 
