@@ -1,5 +1,6 @@
 ---
 family: 'linux' # or windows
+#zabbix-agent: 'true'
 
 zabbix_version: 3.4
 zabbix_repo: zabbix
