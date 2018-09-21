@@ -162,7 +162,6 @@
 - name: "Configure IPTables"
   iptables:
     destination_port: "{{ zabbix_agent_listenport }}"
-    source: "{{ agent_serveractive }}"
     protocol: tcp
     chain: INPUT
     jump: ACCEPT
