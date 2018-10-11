@@ -1,0 +1,55 @@
+---
+- name: 'Configure Firewall on {{ ansible_distribution }} {{ ansible_distribution_major_version|int }}'
+  firewalld:
+    port: '{{ zabbix_agent_listenport }}/tcp'
+    permanent: 'true'
+    state: 'enabled'
+  when:
+    - ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+    - ansible_distribution_major_version|int > 6
+    - zabbix_agent_firewall_enable
+  register: result
+
+- name: 'Reload firewalld service on {{ ansible_distribution }} {{ ansible_distribution_major_version|int }}'
+  service:
+    name: firewalld
+    state: reloaded
+  when:
+    - ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+    - ansible_distribution_major_version|int > 6
+    - zabbix_agent_firewall_enable 
+    - result.changed
+
+- name: 'Configure Firewall on {{ ansible_distribution }} {{ ansible_distribution_major_version|int }}'
+  lineinfile:
+    dest: '/etc/sysconfig/iptables'
+    regexp: '^-A INPUT -p tcp -m tcp --dport {{ zabbix_agent_listenport }} -j ACCEPT$'
+    line: '-A INPUT -p tcp -m tcp --dport {{ zabbix_agent_listenport }} -j ACCEPT'
+    insertafter: '^:OUTPUT ACCEPT \[\d*:\d*\]$'
+  when:
+    - ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+    - ansible_distribution_major_version|int < 7
+    - zabbix_agent_firewall_enable
+  register: result
+
+- name: Reload firewalld service
+  service:
+    name: 'iptables'
+    state: 'restarted'
+  when:
+    - ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+    - ansible_distribution_major_version|int > 6
+    - zabbix_agent_firewall_enable
+    - result.changed
+
+- name: "Configure IPTables"
+  iptables:
+    destination_port: "{{ zabbix_agent_listenport }}"
+    protocol: tcp
+    chain: INPUT
+    jump: ACCEPT
+  become: yes
+  when:
+    - zabbix_agent_firewall_enable
+    - ansible_distribution != "CentOS" or ansible_distribution != "RedHat"
+    - ansible_distribution_major_version|int < 7

@@ -145,28 +145,8 @@
     - config
     - include
 
-- name: "Configure Firewall"
-  when: (ansible_distribution == "CentOS" or ansible_distribution == "RedHat") and ansible_distribution_major_version|int > 6 and zabbix_agent_firewall_enable
-  firewalld:
-    port: '10050/tcp'
-    permanent: 'true'
-    state: 'enabled'
-  register: result
-
-- name: Reload firewalld service
-  when: (ansible_distribution == "CentOS" or ansible_distribution == "RedHat") and ansible_distribution_major_version|int > 6 and zabbix_agent_firewall_enable and result.changed
-  service:
-    name: firewalld
-    state: reloaded
-
-- name: "Configure IPTables"
-  iptables:
-    destination_port: "{{ zabbix_agent_listenport }}"
-    protocol: tcp
-    chain: INPUT
-    jump: ACCEPT
-  become: yes
-  when: zabbix_agent_firewall_enable and ansible_distribution_major_version|int < 7
+- name: Include firewall tasks
+  include: 'firewall.yml'
 
 - name: "Make sure the zabbix-agent service is running"
   service:
