@@ -1,5 +1,5 @@
 ---
-family: 'linux' # or windows
+family: 'linux' # linux or windows
 #zabbix_agenter: 'true'
 
 zabbix_version: 3.4
