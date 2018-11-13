@@ -1,7 +1,7 @@
 ansible-zabbix-agent
-=========
+====================
 
-Do not use in production environment.
+Testing and development purposes only, should not be used in a production environment.
 
 Fork by https://github.com/dj-wasabi/ansible-zabbix-agent
 
