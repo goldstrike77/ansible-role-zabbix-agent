@@ -1,4 +1,6 @@
-ansible-zabbix-agent
+<p><img src="https://raw.githubusercontent.com/goldstrike77/goldstrike77.github.io/master/img/logo/logo_linux_win.png" align="right" /></p>
+
+ansible-role-zabbix-agent
 ====================
 
 Testing and development purposes only, should not be used in a production environment.
