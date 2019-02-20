@@ -5,7 +5,7 @@
   when:
     - zabbix_agent_ip is not defined
     - "'ansible_default_ipv4' in hostvars[inventory_hostname]"
-    - family == 'linux'
+    - ansible_system == 'Linux'
 
 - name: "Set default ip address for zabbix_agent_ip"
   set_fact:
@@ -13,7 +13,7 @@
   when:
     - zabbix_agent_ip is not defined
     - "'ansible_ip_addresses' in hostvars[inventory_hostname]"
-    - family == 'windows'
+    - ansible_system == 'Win32NT'
 
 - name: "Fail invalid specified agent_listeninterface"
   fail:
@@ -111,4 +111,4 @@
     - api
 
 - name: Include tasks for specific OS
-  include: '{{ family }}.yml'
+  include: '{{ ansible_system }}.yml'

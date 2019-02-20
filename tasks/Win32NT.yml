@@ -1,11 +1,11 @@
 ---
-- name: 'Zabbix {{ family }} agent installation'
+- name: 'Zabbix agent installation'
   win_chocolatey:
     name: '{{ win_software }}'
     state: 'present'
   ignore_errors: yes
 
-- name: 'Zabbix {{ family }} agent configure file transfer'
+- name: 'Zabbix agent configure file transfer'
   win_template:
     src: 'zabbix_agentd.win.conf.j2'
     dest: 'C:\ProgramData\zabbix\zabbix_agentd.conf'
