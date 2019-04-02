@@ -68,6 +68,8 @@
   when:
     - zabbix_api_create_hostgroup
   become: no
+  environment:
+    no_proxy: '{{ zabbix_agent_server }}'
   tags:
     - api
 
@@ -90,6 +92,8 @@
     - zabbix_api_create_hosts
   become: no
   changed_when: false
+  environment:
+    no_proxy: '{{ zabbix_agent_server }}'
   tags:
     - api
 
