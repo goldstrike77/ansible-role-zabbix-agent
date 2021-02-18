@@ -1,18 +1,18 @@
 ---
 - name: "Set default ip address for zabbix_agent_ip"
   set_fact:
-    zabbix_agent_ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4'].address }}"
+    zabbix_agent_ip: "{{ hostvars[ansible_hostname]['ansible_default_ipv4'].address }}"
   when:
     - zabbix_agent_ip is not defined
-    - "'ansible_default_ipv4' in hostvars[inventory_hostname]"
+    - "'ansible_default_ipv4' in hostvars[ansible_hostname]"
     - ansible_system == 'Linux'
 
 - name: "Set default ip address for zabbix_agent_ip"
   set_fact:
-    zabbix_agent_ip: "{{ hostvars[inventory_hostname]['ansible_ip_addresses'].0 }}"
+    zabbix_agent_ip: "{{ hostvars[ansible_hostname]['ansible_ip_addresses'].0 }}"
   when:
     - zabbix_agent_ip is not defined
-    - "'ansible_ip_addresses' in hostvars[inventory_hostname]"
+    - "'ansible_ip_addresses' in hostvars[ansible_hostname]"
     - ansible_system == 'Win32NT'
 
 - name: "Fail invalid specified agent_listeninterface"
@@ -27,8 +27,8 @@
 
 - name: "Get IP of agent_listeninterface when no agent_listenip specified"
   set_fact:
-    zabbix_agent_listenip: "{{ hostvars[inventory_hostname]['ansible_' + zabbix_agent_listeninterface]['ipv4'].address | default('0.0.0.0') }}"
-    zabbix_agent_ip: "{{ hostvars[inventory_hostname]['ansible_' + zabbix_agent_listeninterface]['ipv4'].address | default('0.0.0.0') }}"
+    zabbix_agent_listenip: "{{ hostvars[ansible_hostname]['ansible_' + zabbix_agent_listeninterface]['ipv4'].address | default('0.0.0.0') }}"
+    zabbix_agent_ip: "{{ hostvars[ansible_hostname]['ansible_' + zabbix_agent_listeninterface]['ipv4'].address | default('0.0.0.0') }}"
   when:
     - zabbix_agent_listeninterface
     - not zabbix_agent_listenip
